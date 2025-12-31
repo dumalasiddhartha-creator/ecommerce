@@ -3,11 +3,27 @@
 import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Star, Heart, ShoppingCart, Truck, Shield, RotateCcw, Bot, ThumbsUp, ThumbsDown } from 'lucide-react'
+import { Star, Heart, ShoppingCart, Truck, Shield, Bot, ThumbsUp, ThumbsDown } from 'lucide-react'
 import ProductCard from '@/components/ProductCard'
 
+// Type definitions
+interface Product {
+  id: number
+  name: string
+  price: number
+  originalPrice: number
+  images: string[]
+  rating: number
+  reviews: number
+  discount: number
+  description: string
+  features: string[]
+  deliveryETA: string
+  inStock: boolean
+}
+
 // Mock product data
-const productData = {
+const productData: Record<number, Product> = {
   1: {
     id: 1,
     name: 'Apple MacBook Pro 14" M2 Chip',
@@ -72,15 +88,19 @@ const aiReviewSummary = {
 
 export default function ProductPage() {
   const params = useParams()
-  const productId = parseInt(params.id as string)
-  const product = productData[productId as keyof typeof productData]
+  const productId = parseInt(params.id as string, 10)
+  const product = productData[productId]
   const [selectedImage, setSelectedImage] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
 
-  if (!product) {
+  if (!product || isNaN(productId)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-text-light">Product not found</p>
+        <div className="text-center">
+          <p className="text-2xl font-bold text-text mb-2">Product not found</p>
+          <p className="text-text-light mb-4">The product you're looking for doesn't exist.</p>
+          <a href="/" className="text-primary hover:underline">Return to homepage</a>
+        </div>
       </div>
     )
   }

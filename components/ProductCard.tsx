@@ -27,7 +27,6 @@ export default function ProductCard({
   discount,
 }: ProductCardProps) {
   const [isLiked, setIsLiked] = useState(false)
-  const [showQuickView, setShowQuickView] = useState(false)
 
   return (
     <motion.div
@@ -51,19 +50,15 @@ export default function ProductCard({
             </div>
           )}
           {/* Quick View Button */}
-          <motion.button
-            initial={{ opacity: 0 }}
-            whileHover={{ opacity: 1 }}
+          <Link
+            href={`/product/${id}`}
             className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-            onClick={(e) => {
-              e.preventDefault()
-              setShowQuickView(true)
-            }}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-white rounded-full p-3">
               <Eye className="h-5 w-5 text-primary" />
             </div>
-          </motion.button>
+          </Link>
         </div>
       </Link>
 

@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Check, CreditCard, Smartphone, Wallet, Truck, MapPin } from 'lucide-react'
-import ProductCard from '@/components/ProductCard'
 
 const checkoutSteps = [
   { id: 1, name: 'Address', icon: MapPin, completed: true },

@@ -3,11 +3,24 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Send, Bot } from 'lucide-react'
-import ProductCard from './ProductCard'
+
+interface Message {
+  id: number
+  type: 'user' | 'ai'
+  text: string
+  products?: Array<{
+    id: number
+    name: string
+    price: number
+    image: string
+    rating: number
+    reviews: number
+  }>
+}
 
 export default function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       type: 'ai',
@@ -125,7 +138,7 @@ export default function AIChatbot() {
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 />
                 <button
                   onClick={handleSend}
